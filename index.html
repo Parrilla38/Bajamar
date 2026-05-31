@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BajaMar · Taberna marinera en el corazón de Ronda</title>
+<meta name="description" content="BajaMar — taberna marinera en el centro de Ronda. Pescado fresco, mariscos, frituras y carnes de la serranía con hospitalidad andaluza." />
+
+<!-- ===== Google Fonts ===== -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+/* =========================================================
+   BAJAMAR · Sistema de diseño
+   ========================================================= */
+:root{
+  --cobalto:#1453B8;
+  --cobalto-hover:#0E4395;
+  --marino:#0A2A52;
+  --blanco:#FFFFFF;
+  --hueso:#F6F1E9;
+  --arena:#D7B27D;
+  --arena-hover:#C79A5E;
+  --tinta:#1C2733;
+  --gris-en:#6B7785;
+
+  --sombra:0 10px 30px rgba(10,42,82,.12);
+  --sombra-fuerte:0 18px 50px rgba(10,42,82,.22);
+  --radio:16px;
+  --radio-sm:10px;
+  --header-h:70px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;scroll-padding-top:var(--header-h);-webkit-text-size-adjust:100%;}
+body{
+  font-family:"Inter",system-ui,-apple-system,sans-serif;
+  color:var(--tinta);
+  background:var(--hueso);
+  line-height:1.6;
+  font-size:16px;
+  overflow-x:hidden;
+}
+img{display:block;max-width:100%;}
+a{color:inherit;text-decoration:none;}
+h1,h2,h3,.font-head{font-family:"Sora",system-ui,sans-serif;line-height:1.12;letter-spacing:-.01em;}
+::selection{background:var(--cobalto);color:#fff;}
+
+/* Accesibilidad: foco visible */
+a:focus-visible,button:focus-visible,.tab:focus-visible{
+  outline:3px solid var(--arena);
+  outline-offset:3px;
+  border-radius:6px;
+}
+
+/* ---------- Layout helpers ---------- */
+.wrap{width:100%;max-width:1180px;margin:0 auto;padding:0 22px;}
+.section{padding:64px 0;}
+.eyebrow{
+  font-family:"Sora",sans-serif;font-weight:600;font-size:.78rem;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--cobalto);
+  display:inline-flex;align-items:center;gap:.6rem;
+}
+.eyebrow::before{content:"";width:26px;height:2px;background:var(--arena);display:inline-block;}
+.section-title{font-size:clamp(1.7rem,6vw,2.6rem);font-weight:700;color:var(--marino);margin:.5rem 0 .2rem;}
+.lead{color:var(--tinta);opacity:.9;max-width:60ch;}
+
+/* ---------- Separador ola (cola de ballena) ---------- */
+.wave-sep{display:flex;justify-content:center;align-items:center;gap:14px;padding:6px 0;color:var(--cobalto);opacity:.55;}
+.wave-sep svg{display:block;}
+.wave-sep .line{height:1px;width:64px;background:linear-gradient(90deg,transparent,var(--cobalto));}
+.wave-sep .line.r{background:linear-gradient(90deg,var(--cobalto),transparent);}
+
+/* =========================================================
+   HEADER / NAV
+   ========================================================= */
+.header{
+  position:fixed;top:0;left:0;right:0;z-index:100;height:var(--header-h);
+  display:flex;align-items:center;
+  transition:background .35s var(--ease),box-shadow .35s var(--ease);
+  background:transparent;
+}
+.header.scrolled{background:rgba(246,241,233,.92);backdrop-filter:blur(10px);box-shadow:0 2px 18px rgba(10,42,82,.10);}
+.header__inner{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:1180px;margin:0 auto;padding:0 22px;}
+
+.brand{display:flex;align-items:center;gap:10px;color:#fff;transition:color .35s var(--ease);}
+.header.scrolled .brand{color:var(--marino);}
+.brand .mark{width:34px;height:34px;flex:none;}
+.brand .name{font-family:"Sora",sans-serif;font-weight:700;font-size:1.32rem;letter-spacing:.01em;}
+.brand .name b{color:var(--arena);font-weight:700;}
+
+/* nav desktop */
+.nav{display:flex;align-items:center;gap:6px;}
+.nav a{
+  font-weight:500;font-size:.93rem;color:#fff;padding:9px 13px;border-radius:8px;
+  transition:color .2s var(--ease),background .2s var(--ease);position:relative;
+}
+.header.scrolled .nav a{color:var(--marino);}
+.nav a::after{content:"";position:absolute;left:13px;right:13px;bottom:5px;height:2px;background:var(--arena);transform:scaleX(0);transform-origin:left;transition:transform .25s var(--ease);}
+.nav a:hover::after,.nav a.active::after{transform:scaleX(1);}
+
+.header-right{display:flex;align-items:center;gap:14px;}
+
+/* selector idioma decorativo */
+.lang{display:inline-flex;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.45);border-radius:999px;padding:3px;}
+.header.scrolled .lang{background:rgba(20,83,184,.08);border-color:rgba(20,83,184,.22);}
+.lang button{
+  font-family:"Sora",sans-serif;font-weight:600;font-size:.72rem;letter-spacing:.06em;
+  border:none;background:transparent;color:#fff;cursor:pointer;padding:5px 11px;border-radius:999px;transition:all .2s var(--ease);
+}
+.header.scrolled .lang button{color:var(--marino);}
+.lang button.on{background:#fff;color:var(--cobalto);}
+.header.scrolled .lang button.on{background:var(--cobalto);color:#fff;}
+
+/* hamburguesa */
+.burger{display:none;width:44px;height:44px;border:none;background:transparent;cursor:pointer;padding:10px;border-radius:10px;}
+.burger span{display:block;height:2px;width:100%;background:#fff;border-radius:2px;transition:transform .3s var(--ease),opacity .2s var(--ease);}
+.header.scrolled .burger span{background:var(--marino);}
+.burger span+span{margin-top:5px;}
+.burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.burger[aria-expanded="true"] span:nth-child(2){opacity:0;}
+.burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;color:#fff;overflow:hidden;}
+.hero__media{position:absolute;inset:0;z-index:0;}
+.hero__media video,.hero__media img{width:100%;height:100%;object-fit:cover;}
+.hero__overlay{
+  position:absolute;inset:0;z-index:1;
+  background:
+    linear-gradient(180deg,rgba(10,42,82,.55) 0%,rgba(10,42,82,.30) 38%,rgba(10,42,82,.78) 100%),
+    linear-gradient(90deg,rgba(20,83,184,.42),rgba(10,42,82,.15));
+}
+.hero__inner{position:relative;z-index:2;padding-top:var(--header-h);}
+.hero h1{font-size:clamp(2.2rem,8.5vw,4.4rem);font-weight:700;max-width:16ch;text-shadow:0 2px 24px rgba(10,42,82,.35);}
+.hero p{margin-top:18px;font-size:clamp(1rem,3.6vw,1.22rem);max-width:50ch;opacity:.96;font-weight:400;}
+.hero .cta-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px;}
+
+/* botones */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  font-family:"Sora",sans-serif;font-weight:600;font-size:.98rem;
+  padding:14px 26px;border-radius:999px;cursor:pointer;border:2px solid transparent;
+  transition:background .25s var(--ease),color .25s var(--ease),border-color .25s var(--ease),transform .15s var(--ease),box-shadow .25s var(--ease);
+}
+.btn svg{width:18px;height:18px;}
+.btn--primary{background:var(--cobalto);color:#fff;box-shadow:0 8px 22px rgba(20,83,184,.35);}
+.btn--primary:hover{background:var(--cobalto-hover);transform:translateY(-2px);box-shadow:0 12px 28px rgba(20,83,184,.42);}
+.btn--ghost{background:transparent;color:#fff;border-color:var(--arena);}
+.btn--ghost:hover{background:var(--arena);color:var(--marino);transform:translateY(-2px);}
+.btn--dark{background:var(--marino);color:#fff;}
+.btn--dark:hover{background:#06203f;transform:translateY(-2px);}
+
+.scroll-hint{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:2;color:#fff;opacity:.8;animation:bob 2.2s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
+
+/* =========================================================
+   ESENCIA
+   ========================================================= */
+.esencia{background:var(--hueso);}
+.esencia__grid{display:grid;grid-template-columns:1fr;gap:34px;align-items:center;}
+.esencia__text p{margin-top:18px;color:var(--tinta);opacity:.92;}
+.pillars-words{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-top:30px;}
+.pillars-words span{font-family:"Sora",sans-serif;font-weight:700;font-size:clamp(1.5rem,7vw,2.6rem);color:var(--marino);}
+.pillars-words i{color:var(--arena);font-style:normal;font-size:1.2rem;transform:translateY(-3px);}
+.esencia__media{position:relative;border-radius:var(--radio);overflow:hidden;box-shadow:var(--sombra);aspect-ratio:4/3;}
+.esencia__media img{width:100%;height:100%;object-fit:cover;object-position:center 38%;}
+/* degradado de marca para difuminar marca de agua (esquina inf.) */
+.esencia__media::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(10,42,82,0) 45%,rgba(10,42,82,.06) 70%,rgba(20,83,184,.34) 100%);
+}
+
+/* =========================================================
+   PILARES
+   ========================================================= */
+.pilares{background:#fff;}
+.pilares__grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:34px;}
+.dish-card{
+  background:var(--hueso);border-radius:var(--radio);overflow:hidden;box-shadow:var(--sombra);
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease);
+}
+.dish-card:hover{transform:translateY(-4px);box-shadow:var(--sombra-fuerte);}
+.dish-card__img{position:relative;aspect-ratio:1/1;overflow:hidden;}
+.dish-card__img img{width:100%;height:100%;object-fit:cover;transition:transform .55s var(--ease);}
+.dish-card:hover .dish-card__img img{transform:scale(1.07);}
+.dish-card__num{position:absolute;top:12px;left:12px;width:30px;height:30px;border-radius:50%;background:rgba(10,42,82,.78);color:#fff;font-family:"Sora",sans-serif;font-weight:700;font-size:.85rem;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(2px);}
+.dish-card__body{padding:16px 16px 20px;}
+.dish-card__body h3{font-size:1.04rem;font-weight:600;color:var(--marino);}
+.dish-card__tag{display:inline-block;margin-top:7px;font-size:.82rem;color:var(--cobalto);font-weight:500;}
+
+/* =========================================================
+   CARTA
+   ========================================================= */
+.carta{background:var(--hueso);}
+.tabs{display:flex;flex-wrap:nowrap;gap:8px;margin-top:30px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin;-webkit-overflow-scrolling:touch;}
+.tabs::-webkit-scrollbar{height:5px;}
+.tabs::-webkit-scrollbar-thumb{background:rgba(20,83,184,.3);border-radius:99px;}
+.tab{
+  flex:0 0 auto;font-family:"Sora",sans-serif;font-weight:600;font-size:.86rem;
+  padding:10px 16px;border-radius:999px;border:1.5px solid rgba(20,83,184,.22);
+  background:#fff;color:var(--marino);cursor:pointer;white-space:nowrap;
+  transition:all .2s var(--ease);
+}
+.tab:hover{border-color:var(--cobalto);color:var(--cobalto);}
+.tab.on{background:var(--cobalto);border-color:var(--cobalto);color:#fff;}
+
+.carta__panel{display:none;margin-top:28px;}
+.carta__panel.on{display:grid;grid-template-columns:1fr;gap:26px;animation:fade .4s var(--ease);}
+@keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+.carta__media{border-radius:var(--radio);overflow:hidden;box-shadow:var(--sombra);aspect-ratio:16/10;}
+.carta__media img{width:100%;height:100%;object-fit:cover;}
+.carta__media img.crop-screenshot{object-fit:cover;object-position:center 50%;transform:scale(1.32);}
+
+.menu-list{display:flex;flex-direction:column;}
+.menu-item{display:grid;grid-template-columns:1fr auto;gap:8px 18px;align-items:baseline;padding:15px 0;border-bottom:1px dashed rgba(20,83,184,.18);}
+.menu-item:last-child{border-bottom:none;}
+.menu-item__name{font-weight:600;color:var(--tinta);font-size:1.02rem;}
+.menu-item__en{display:block;font-weight:400;color:var(--gris-en);font-size:.86rem;margin-top:2px;}
+.menu-item__price{font-family:"Sora",sans-serif;font-weight:600;color:var(--cobalto);font-size:1rem;white-space:nowrap;}
+.carta__note{margin-top:26px;padding:16px 20px;background:rgba(20,83,184,.06);border-left:3px solid var(--arena);border-radius:var(--radio-sm);color:var(--marino);font-size:.92rem;}
+
+/* =========================================================
+   GALERÍA
+   ========================================================= */
+.galeria{background:#fff;}
+.galeria__grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:34px;}
+.gal-item{position:relative;overflow:hidden;border-radius:var(--radio);box-shadow:var(--sombra);aspect-ratio:1/1;}
+.gal-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease);}
+.gal-item:hover img{transform:scale(1.08);}
+.gal-item figcaption{
+  position:absolute;left:0;right:0;bottom:0;padding:24px 14px 12px;
+  font-family:"Sora",sans-serif;font-weight:600;font-size:.82rem;color:#fff;
+  background:linear-gradient(180deg,rgba(10,42,82,0),rgba(10,42,82,.82));
+  transform:translateY(8px);opacity:0;transition:opacity .3s var(--ease),transform .3s var(--ease);
+}
+.gal-item:hover figcaption,.gal-item:focus-within figcaption{opacity:1;transform:none;}
+/* primer item destacado en escritorio */
+@media (min-width:760px){
+  .galeria__grid{grid-template-columns:repeat(4,1fr);grid-auto-rows:1fr;}
+  .gal-item.wide{grid-column:span 2;grid-row:span 2;aspect-ratio:auto;}
+}
+
+/* =========================================================
+   CONTACTO / FOOTER
+   ========================================================= */
+.contacto{background:var(--marino);color:#fff;padding:72px 0 0;}
+.contacto .eyebrow{color:var(--arena);}
+.contacto .eyebrow::before{background:var(--arena);}
+.contacto .section-title{color:#fff;}
+.contacto__grid{display:grid;grid-template-columns:1fr;gap:30px;margin-top:36px;}
+.map-box{border-radius:var(--radio);overflow:hidden;box-shadow:var(--sombra-fuerte);min-height:280px;border:1px solid rgba(255,255,255,.12);}
+.map-box iframe{display:block;width:100%;height:100%;min-height:280px;border:0;filter:saturate(1.05);}
+
+.info-block h3{font-size:1.05rem;font-weight:600;color:var(--arena);margin-bottom:12px;display:flex;align-items:center;gap:9px;}
+.hours{list-style:none;}
+.hours li{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.10);font-size:.95rem;}
+.hours li span:first-child{color:rgba(255,255,255,.78);}
+.hours li span:last-child{font-weight:500;text-align:right;}
+.hours li.closed span:last-child{color:var(--arena);}
+
+.reserva p{color:rgba(255,255,255,.82);font-size:.96rem;margin-bottom:16px;}
+.phone-link{
+  display:inline-flex;align-items:center;gap:12px;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.18);border-radius:var(--radio);padding:16px 20px;
+  font-family:"Sora",sans-serif;font-weight:700;font-size:1.32rem;color:#fff;
+  transition:all .25s var(--ease);
+}
+.phone-link:hover{background:var(--cobalto);border-color:var(--cobalto);transform:translateY(-2px);box-shadow:0 12px 28px rgba(20,83,184,.4);}
+.phone-link svg{width:24px;height:24px;flex:none;color:var(--arena);}
+.phone-link:hover svg{color:#fff;}
+
+.footer-bar{margin-top:60px;border-top:1px solid rgba(255,255,255,.12);padding:26px 0;}
+.footer-bar__inner{display:flex;flex-wrap:wrap;gap:10px 24px;align-items:center;justify-content:space-between;color:rgba(255,255,255,.7);font-size:.86rem;}
+.footer-bar .brand .name{font-size:1.1rem;}
+.footer-bar .brand{color:#fff;}
+
+/* =========================================================
+   BOTÓN FLOTANTE TELÉFONO
+   ========================================================= */
+.fab-call{
+  position:fixed;right:18px;bottom:18px;z-index:90;
+  width:60px;height:60px;border-radius:50%;
+  background:var(--cobalto);color:#fff;display:none;align-items:center;justify-content:center;
+  box-shadow:0 10px 26px rgba(20,83,184,.5);
+  animation:pulse 2.4s ease-in-out infinite;transition:background .2s var(--ease),transform .2s var(--ease);
+}
+.fab-call:hover{background:var(--cobalto-hover);transform:scale(1.06);}
+.fab-call svg{width:26px;height:26px;}
+@keyframes pulse{0%{box-shadow:0 10px 26px rgba(20,83,184,.5),0 0 0 0 rgba(20,83,184,.45);}70%{box-shadow:0 10px 26px rgba(20,83,184,.5),0 0 0 16px rgba(20,83,184,0);}100%{box-shadow:0 10px 26px rgba(20,83,184,.5),0 0 0 0 rgba(20,83,184,0);}}
+
+/* =========================================================
+   REVEAL on scroll
+   ========================================================= */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.reveal.in{opacity:1;transform:none;}
+.reveal.d1{transition-delay:.08s;}
+.reveal.d2{transition-delay:.16s;}
+.reveal.d3{transition-delay:.24s;}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none;}
+  html{scroll-behavior:auto;}
+  .fab-call,.scroll-hint{animation:none;}
+}
+
+/* =========================================================
+   RESPONSIVE  (mobile-first → escala arriba)
+   ========================================================= */
+@media (max-width:860px){
+  .nav,.header-right .lang{display:none;}
+  .burger{display:block;}
+  .header-right{gap:0;}
+
+  /* menú móvil desplegable */
+  .nav.open{
+    display:flex;flex-direction:column;gap:4px;
+    position:fixed;top:var(--header-h);left:0;right:0;
+    background:rgba(246,241,233,.98);backdrop-filter:blur(12px);
+    padding:14px 22px 22px;box-shadow:0 18px 40px rgba(10,42,82,.16);
+    animation:slideDown .3s var(--ease);
+  }
+  .nav.open a{color:var(--marino);font-size:1.05rem;padding:13px 8px;border-bottom:1px solid rgba(20,83,184,.10);}
+  .nav.open a::after{display:none;}
+  .nav.open .lang-m{display:inline-flex;margin-top:14px;background:rgba(20,83,184,.08);border:1px solid rgba(20,83,184,.22);border-radius:999px;padding:3px;width:fit-content;}
+  .nav.open .lang-m button{font-family:"Sora",sans-serif;font-weight:600;font-size:.72rem;letter-spacing:.06em;border:none;background:transparent;color:var(--marino);cursor:pointer;padding:6px 14px;border-radius:999px;}
+  .nav.open .lang-m button.on{background:var(--cobalto);color:#fff;}
+  @keyframes slideDown{from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:none;}}
+  .fab-call{display:flex;}
+}
+@media (min-width:861px){ .lang-m{display:none;} }
+
+@media (min-width:760px){
+  .section{padding:96px 0;}
+  .esencia__grid{grid-template-columns:1.05fr .95fr;gap:50px;}
+  .pilares__grid{grid-template-columns:repeat(4,1fr);gap:22px;}
+  .carta__panel.on{grid-template-columns:1fr 1.15fr;gap:46px;align-items:start;}
+  .carta__media{position:sticky;top:96px;}
+  .contacto__grid{grid-template-columns:1.4fr 1fr 1fr;gap:38px;}
+  .menu-item__name{font-size:1.06rem;}
+}
+@media (min-width:1100px){
+  .section{padding:112px 0;}
+  .hero p{font-size:1.22rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header class="header" id="header">
+  <div class="header__inner">
+    <a href="#inicio" class="brand" aria-label="BajaMar, inicio">
+      <svg class="mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <!-- cola de ballena minimalista -->
+        <path d="M24 30c-1.6-5-1.8-11-1-17 .2-1.4 2.2-1.4 2.4 0 .8 6 .6 12-1 17-2.8 4.8-9 7.4-15.4 7.8-1.3.1-1.7-1.6-.6-2.2C13.8 33 20 31.6 24 30Z" fill="currentColor"/>
+        <path d="M24 30c1.6-5 1.8-11 1-17 0 0 0 0 0 0 .8 6 .6 12-1 17 2.8 4.8 9 7.4 15.4 7.8 1.3.1 1.7-1.6.6-2.2C34.2 33 28 31.6 24 30Z" fill="currentColor" opacity=".62"/>
+      </svg>
+      <span class="name">Baja<b>Mar</b></span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="Navegación principal">
+      <a href="#inicio" data-en="Home">Inicio</a>
+      <a href="#esencia" data-en="Essence">Esencia</a>
+      <a href="#pilares" data-en="Signature Dishes">Platos Estrella</a>
+      <a href="#carta" data-en="Menu">La Carta</a>
+      <a href="#galeria" data-en="Gallery">Galería</a>
+      <a href="#contacto" data-en="Hours &amp; Contact">Horario y Contacto</a>
+      <div class="lang-m" role="group" aria-label="Idioma / Language">
+        <button type="button" class="on" data-lang="es" aria-pressed="true">ES</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </nav>
+
+    <div class="header-right">
+      <div class="lang" role="group" aria-label="Idioma / Language">
+        <button type="button" class="on" data-lang="es" aria-pressed="true">ES</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="inicio">
+  <div class="hero__media">
+    <video autoplay muted loop playsinline
+           poster="Imagenes/WhatsApp%20Image%202026-05-31%20at%2018.35.45.jpeg">
+      <source src="Imagenes/hero.mp4" type="video/mp4" />
+    </video>
+  </div>
+  <div class="hero__overlay"></div>
+  <div class="hero__inner wrap">
+    <h1 class="reveal in" data-en="The taste of the sea in the heart of Ronda.">El sabor del mar en el corazón de Ronda.</h1>
+    <p class="reveal in d1" data-en="A gastronomic journey blending the freshness of seaside taverns, Andalusian hospitality and meats with the character of our mountains.">Un viaje gastronómico que fusiona la frescura de las tabernas marineras, la hospitalidad andaluza y carnes con carácter de nuestra serranía.</p>
+    <div class="cta-row reveal in d2">
+      <a href="#carta" class="btn btn--primary" data-en="View the Menu">Ver la Carta</a>
+      <a href="tel:+34614035652" class="btn btn--ghost">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+        <span data-en="Call to Book">Llamar para Reservar</span>
+      </a>
+    </div>
+  </div>
+  <a href="#esencia" class="scroll-hint" aria-label="Bajar a la sección Esencia">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+  </a>
+</section>
+
+<!-- ===================== ESENCIA ===================== -->
+<section class="section esencia" id="esencia">
+  <div class="wrap">
+    <div class="esencia__grid">
+      <div class="esencia__text reveal">
+        <span class="eyebrow" data-en="Our Essence">Nuestra Esencia</span>
+        <h2 class="section-title" data-en="Out to sea, deep in the mountains.">Mar adentro, en plena serranía.</h2>
+        <p data-en="BajaMar was born from a simple idea: to bring the taste of the sea to Ronda with an honest offering, rooted in good produce, tradition and a warm welcome.">BajaMar nació de una idea sencilla: acercar el sabor del mar a Ronda con una propuesta honesta, basada en el producto, la tradición y el trato cercano.</p>
+        <p data-en="Although Ronda lies inland, it is a city with a great culinary culture. We wanted to create a space where locals and visitors could enjoy fresh fish, shellfish and seaside recipes in a relaxed, welcoming atmosphere, combining the spirit of seaside taverns with Andalusian hospitality.">Aunque Ronda se encuentra en el interior, es una ciudad con una gran cultura gastronómica. Queríamos crear un espacio donde rondeños y visitantes pudieran disfrutar de pescado fresco, mariscos y recetas marineras en un ambiente informal y acogedor, combinando la esencia de las tabernas marineras con la hospitalidad andaluza.</p>
+        <div class="pillars-words">
+          <span data-en="SEA">MAR</span><i>•</i><span data-en="TRADITION">TRADICIÓN</span><i>•</i><span data-en="FLAVOUR">SABOR</span>
+        </div>
+      </div>
+      <div class="esencia__media reveal d1">
+        <img src="Imagenes/WhatsApp%20Image%202026-05-31%20at%2018.35.45%20(3).jpeg" alt="Interior acogedor de la taberna BajaMar, con decoración marinera en tonos azules" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wave-sep" aria-hidden="true">
+  <span class="line"></span>
+  <svg width="40" height="20" viewBox="0 0 40 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 14c4 0 5-8 9-8s5 8 9 8 5-8 9-8 5 8 9 8"/></svg>
+  <span class="line r"></span>
+</div>
+
+<!-- ===================== PILARES ===================== -->
+<section class="section pilares" id="pilares">
+  <div class="wrap">
+    <div class="reveal" style="max-width:62ch">
+      <span class="eyebrow" data-en="Signature Dishes">Platos Estrella</span>
+      <h2 class="section-title" data-en="The four pillars of the house.">Los cuatro pilares de la casa.</h2>
+      <p class="lead" data-en="Four recipes that sum up who we are: produce from the sea, the fire of tradition and the character of the mountains.">Cuatro recetas que resumen quiénes somos: producto del mar, fuego de tradición y carácter de serranía.</p>
+    </div>
+    <div class="pilares__grid">
+      <article class="dish-card reveal">
+        <div class="dish-card__img"><span class="dish-card__num">1</span><img src="Imagenes/WhatsApp%20Image%202026-05-31%20at%2018.35.47%20(3).jpeg" alt="Ensalada de pulpo y mango" loading="lazy" /></div>
+        <div class="dish-card__body"><h3 data-en="Octopus &amp; mango salad">Ensalada de pulpo y mango</h3><span class="dish-card__tag" data-en="Freshness of the Atlantic">Frescor del Atlántico</span></div>
+      </article>
+      <article class="dish-card reveal d1">
+        <div class="dish-card__img"><span class="dish-card__num">2</span><img src="Imagenes/fideos.jpeg" alt="Fideos tostados con jibia y langostinos, gratinados" loading="lazy" /></div>
+        <div class="dish-card__body"><h3 data-en="Toasted noodles with cuttlefish &amp; prawns">Fideos tostados con jibia y langostinos</h3><span class="dish-card__tag" data-en="Gratinated aioli in its own coral">Alioli gratinado en su coral</span></div>
+      </article>
+      <article class="dish-card reveal d2">
+        <div class="dish-card__img"><span class="dish-card__num">3</span><img src="Imagenes/chanquete.jpeg" alt="Chanquete con huevo y pimientos" loading="lazy" /></div>
+        <div class="dish-card__body"><h3 data-en="Whitebait with egg &amp; peppers">Chanquete con huevo y pimientos</h3><span class="dish-card__tag" data-en="Seaside tradition">Tradición marinera</span></div>
+      </article>
+      <article class="dish-card reveal d3">
+        <div class="dish-card__img"><span class="dish-card__num">4</span><img src="Imagenes/WhatsApp%20Image%202026-05-31%20at%2018.35.47.jpeg" alt="Cachopo asturiano relleno de jamón y queso" loading="lazy" /></div>
+        <div class="dish-card__body"><h3 data-en="Asturian cachopo">Cachopo asturiano</h3><span class="dish-card__tag" data-en="From the mountains, with character">De la serranía, con carácter</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CARTA ===================== -->
+<section class="section carta" id="carta">
+  <div class="wrap">
+    <div class="reveal" style="max-width:62ch">
+      <span class="eyebrow" data-en="The Menu">La Carta</span>
+      <h2 class="section-title" data-en="Our menu, bilingual and seasonal.">Nuestra carta, bilingüe y de temporada.</h2>
+      <p class="lead" data-en="Pick a section. Every dish shows its Spanish name with its English translation.">Selecciona una sección. Cada plato incluye su nombre en español y su traducción al inglés.</p>
+    </div>
+
+    <div class="tabs reveal d1" role="tablist" aria-label="Secciones de la carta">
+      <button class="tab on" role="tab" aria-selected="true" data-tab="start" data-en="To Start">Para Abrir Boca</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="fritura" data-en="Fried Fish">Nuestra Fritura</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="mar" data-en="Seafood &amp; Grill">Joyas del Mar</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="carne" data-en="Meat Dishes">De la Serranía a la Mesa</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="dulce" data-en="Desserts">El Momento Dulce</button>
+    </div>
+
+    <!-- Para Abrir Boca -->
+    <div class="carta__panel on" data-panel="start" role="tabpanel">
+      <div class="carta__media"><img class="crop-screenshot" src="Imagenes/WhatsApp%20Image%202026-05-31%20at%2018.35.45%20(5).jpeg" alt="Ensaladilla BajaMar con langostinos" loading="lazy" /></div>
+      <div class="menu-list">
+        <div class="menu-item"><div class="menu-item__name">Ensaladilla BajaMar<span class="menu-item__en">BajaMar-style potato &amp; seafood salad</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Boquerones en vinagre<span class="menu-item__en">Fresh anchovies marinated in vinegar</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Porra Almageña<span class="menu-item__en">Thick chilled tomato &amp; bread purée</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Crema de Ajo Blanco con helado de mango<span class="menu-item__en">Chilled white garlic &amp; almond soup with mango ice cream</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Ensalada de pulpo y mango<span class="menu-item__en">Octopus &amp; mango salad</span></div><div class="menu-item__price">—</div></div>
+      </div>
+    </div>
+
+    <!-- Nuestra Fritura -->
+    <div class="carta__panel" data-panel="fritura" role="tabpanel">
+      <div class="carta__media"><img src="Imagenes/WhatsApp%20Image%202026-05-31%20at%2018.35.46.jpeg" alt="Tortillitas de camarones crujientes" loading="lazy" /></div>
+      <div class="menu-list">
+        <div class="menu-item"><div class="menu-item__name">Tortillitas de camarones o de bacalao<span class="menu-item__en">Shrimp or salt-cod fritters</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Bienmesabe<span class="menu-item__en">Marinated &amp; fried dogfish</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Calamares<span class="menu-item__en">Fried squid rings</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Chocos<span class="menu-item__en">Fried cuttlefish</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Boquerones de Cádiz<span class="menu-item__en">Cádiz-style fried fresh anchovies</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Puntillitas<span class="menu-item__en">Fried baby squid</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Taquitos de bacalao<span class="menu-item__en">Crispy salt-cod bites</span></div><div class="menu-item__price">—</div></div>
+      </div>
+    </div>
+
+    <!-- Joyas del Mar -->
+    <div class="carta__panel" data-panel="mar" role="tabpanel">
+      <div class="carta__media"><img src="Imagenes/WhatsApp%20Image%202026-05-31%20at%2018.35.47%20(2).jpeg" alt="Gambas al pil-pil en su cazuela" loading="lazy" /></div>
+      <div class="menu-list">
+        <div class="menu-item"><div class="menu-item__name">Colas de langostinos<span class="menu-item__en">King prawn tails</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Gambas blancas<span class="menu-item__en">White prawns</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Gambas al pil-pil<span class="menu-item__en">Sizzling prawns in garlic &amp; chilli</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Mejillones marinera<span class="menu-item__en">Mussels in marinara sauce</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Pata de pulpo<span class="menu-item__en">Grilled octopus leg</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Dorada o Lubina a la Rondeña<span class="menu-item__en">Ronda-style sea bream or sea bass</span></div><div class="menu-item__price">—</div></div>
+      </div>
+    </div>
+
+    <!-- De la Serranía a la Mesa -->
+    <div class="carta__panel" data-panel="carne" role="tabpanel">
+      <div class="carta__media"><img src="Imagenes/WhatsApp%20Image%202026-05-31%20at%2018.35.46%20(1).jpeg" alt="Rabo de toro guisado" loading="lazy" /></div>
+      <div class="menu-list">
+        <div class="menu-item"><div class="menu-item__name">Cachopo asturiano<span class="menu-item__en">Asturian breaded veal filled with ham &amp; cheese</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Flamenquín Cordobés<span class="menu-item__en">Córdoba-style breaded pork &amp; ham roll</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Carnes de cerdo ibérico<span class="menu-item__en">Iberian pork cuts</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Rabo de toro<span class="menu-item__en">Slow-braised oxtail stew</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Carrillada de cerdo ibérico<span class="menu-item__en">Braised Iberian pork cheeks</span></div><div class="menu-item__price">—</div></div>
+      </div>
+    </div>
+
+    <!-- El Momento Dulce -->
+    <div class="carta__panel" data-panel="dulce" role="tabpanel">
+      <div class="carta__media"><img src="Imagenes/WhatsApp%20Image%202026-05-31%20at%2018.35.45%20(4).jpeg" alt="Ambiente de sobremesa en BajaMar" loading="lazy" /></div>
+      <div class="menu-list">
+        <div class="menu-item"><div class="menu-item__name">Tarta de queso casera asada<span class="menu-item__en">Homemade baked cheesecake</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Sorbetes<span class="menu-item__en">Seasonal sorbets</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Postres de la casa<span class="menu-item__en">House desserts</span></div><div class="menu-item__price">—</div></div>
+      </div>
+    </div>
+
+    <p class="carta__note reveal" data-en-html="Ask our team about this month&#39;s <strong>Off-Menu Specials</strong>.">Pregunta a nuestro equipo por nuestras <strong>Sugerencias Fuera de Carta</strong> del mes.</p>
+  </div>
+</section>
+
+<div class="wave-sep" aria-hidden="true">
+  <span class="line"></span>
+  <svg width="40" height="20" viewBox="0 0 40 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 14c4 0 5-8 9-8s5 8 9 8 5-8 9-8 5 8 9 8"/></svg>
+  <span class="line r"></span>
+</div>
+
+<!-- ===================== GALERÍA ===================== -->
+<section class="section galeria" id="galeria">
+  <div class="wrap">
+    <div class="reveal" style="max-width:62ch">
+      <span class="eyebrow" data-en="Gallery">Galería</span>
+      <h2 class="section-title" data-en="A walk across our table.">Un paseo por nuestra mesa.</h2>
+      <p class="lead" data-en="Freshly fried fish, shellfish and the deep-blue mood of our tavern.">Pescaíto recién frito, mariscos y el ambiente azul de nuestra taberna.</p>
+    </div>
+    <div class="galeria__grid">
+      <figure class="gal-item wide reveal"><img src="Imagenes/WhatsApp%20Image%202026-05-31%20at%2018.35.45%20(2).jpeg" alt="Pata de pulpo a la brasa" loading="lazy" /><figcaption data-en="Octopus leg">Pata de pulpo</figcaption></figure>
+      <figure class="gal-item reveal d1"><img src="Imagenes/WhatsApp%20Image%202026-05-31%20at%2018.35.47%20(1).jpeg" alt="Puntillitas fritas" loading="lazy" /><figcaption data-en="Baby squid">Puntillitas</figcaption></figure>
+      <figure class="gal-item reveal d1"><img src="Imagenes/WhatsApp%20Image%202026-05-31%20at%2018.35.46%20(3).jpeg" alt="Boquerones de Cádiz fritos" loading="lazy" /><figcaption data-en="Cádiz anchovies">Boquerones de Cádiz</figcaption></figure>
+      <figure class="gal-item reveal d2"><img src="Imagenes/WhatsApp%20Image%202026-05-31%20at%2018.35.46%20(2).jpeg" alt="Chocos y calamares fritos" loading="lazy" /><figcaption data-en="Cuttlefish &amp; squid">Chocos &amp; calamares</figcaption></figure>
+      <figure class="gal-item reveal d2"><img src="Imagenes/WhatsApp%20Image%202026-05-31%20at%2018.35.45%20(1).jpeg" alt="Bienmesabe, cazón en adobo" loading="lazy" /><figcaption data-en="Bienmesabe">Bienmesabe</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTACTO ===================== -->
+<section class="contacto" id="contacto">
+  <div class="wrap">
+    <div style="max-width:62ch">
+      <span class="eyebrow" data-en="Hours &amp; Contact">Horario y Contacto</span>
+      <h2 class="section-title" data-en="We'll be waiting for you in Ronda.">Te esperamos en Ronda.</h2>
+    </div>
+    <div class="contacto__grid">
+      <div class="map-box reveal">
+        <iframe title="Ubicación de BajaMar en Ronda" src="https://www.google.com/maps?q=C.%20Comandante%20Salvador%20Carrasco%2010%2C%2029400%20Ronda%2C%20M%C3%A1laga&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      </div>
+
+      <div class="info-block reveal d1">
+        <h3>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span data-en="Opening Hours">Horarios</span>
+        </h3>
+        <ul class="hours">
+          <li class="closed"><span data-en="Monday">Lunes</span><span data-en="Closed">Cerrado</span></li>
+          <li><span data-en="Tuesday to Saturday">Martes a Sábado</span><span>12:30–16:30<br />20:00–23:00</span></li>
+          <li><span data-en="Sunday">Domingo</span><span>12:30–16:30<br /><span data-en="Afternoon &amp; close">Tardeo y cierre</span></span></li>
+        </ul>
+      </div>
+
+      <div class="info-block reserva reveal d2">
+        <h3>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+          <span data-en="Reservations">Reservas</span>
+        </h3>
+        <p data-en="To secure your table, call us directly:">Para asegurar tu mesa, llámanos directamente:</p>
+        <a class="phone-link" href="tel:+34614035652">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+          +34 614 035 652
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <div class="footer-bar__inner">
+        <a href="#inicio" class="brand" aria-label="BajaMar, inicio">
+          <svg class="mark" viewBox="0 0 48 48" fill="none" aria-hidden="true" style="width:26px;height:26px;color:#fff">
+            <path d="M24 30c-1.6-5-1.8-11-1-17 .2-1.4 2.2-1.4 2.4 0 .8 6 .6 12-1 17-2.8 4.8-9 7.4-15.4 7.8-1.3.1-1.7-1.6-.6-2.2C13.8 33 20 31.6 24 30Z" fill="currentColor"/>
+            <path d="M24 30c1.6-5 1.8-11 1-17 .8 6 .6 12-1 17 2.8 4.8 9 7.4 15.4 7.8 1.3.1 1.7-1.6.6-2.2C34.2 33 28 31.6 24 30Z" fill="currentColor" opacity=".62"/>
+          </svg>
+          <span class="name">Baja<b style="color:var(--arena)">Mar</b></span>
+        </a>
+        <span>C. Comandante Salvador Carrasco, 10 · 29400 Ronda, Málaga</span>
+        <span>© <span id="year"></span> BajaMar · <span data-en="Seaside tavern">Taberna marinera</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FAB TELÉFONO ===================== -->
+<a class="fab-call" href="tel:+34614035652" aria-label="Llamar a BajaMar para reservar">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+</a>
+
+<script>
+/* =========================================================
+   BAJAMAR · JavaScript (vanilla)
+   ========================================================= */
+(function(){
+  "use strict";
+
+  /* ----- Año footer ----- */
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* ----- Header: cambio de fondo al hacer scroll ----- */
+  var header = document.getElementById('header');
+  function onScroll(){
+    if(window.scrollY > 40){ header.classList.add('scrolled'); }
+    else{ header.classList.remove('scrolled'); }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  /* ----- Menú hamburguesa ----- */
+  var burger = document.getElementById('burger');
+  var nav = document.getElementById('nav');
+  function closeMenu(){
+    nav.classList.remove('open');
+    burger.setAttribute('aria-expanded','false');
+    burger.setAttribute('aria-label','Abrir menú');
+  }
+  burger.addEventListener('click', function(){
+    var open = nav.classList.toggle('open');
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+  });
+  nav.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeMenu(); });
+
+  /* ----- Selector de idioma ES / EN (funcional) ----- */
+  var langButtons = document.querySelectorAll('[data-lang]');
+  var i18nText = document.querySelectorAll('[data-en]');
+  var i18nHtml = document.querySelectorAll('[data-en-html]');
+
+  function setLang(lang){
+    var en = (lang === 'en');
+    // Texto simple
+    i18nText.forEach(function(el){
+      if(!el.hasAttribute('data-es')) el.setAttribute('data-es', el.textContent);
+      el.textContent = en ? el.getAttribute('data-en') : el.getAttribute('data-es');
+    });
+    // Contenido con HTML (negritas, etc.)
+    i18nHtml.forEach(function(el){
+      if(!el.hasAttribute('data-es-html')) el.setAttribute('data-es-html', el.innerHTML);
+      el.innerHTML = en ? el.getAttribute('data-en-html') : el.getAttribute('data-es-html');
+    });
+    // Estado de los botones (ambos grupos: escritorio y móvil)
+    langButtons.forEach(function(b){
+      var on = b.getAttribute('data-lang') === lang;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', String(on));
+    });
+    document.documentElement.lang = lang;
+    try{ localStorage.setItem('bajamar-lang', lang); }catch(e){}
+  }
+
+  langButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){ setLang(btn.getAttribute('data-lang')); });
+  });
+
+  // Idioma inicial (recuerda la elección del visitante)
+  var saved = 'es';
+  try{ saved = localStorage.getItem('bajamar-lang') || 'es'; }catch(e){}
+  if(saved === 'en') setLang('en');
+
+  /* ----- Pestañas de la carta ----- */
+  var tabs = document.querySelectorAll('.tab');
+  var panels = document.querySelectorAll('.carta__panel');
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      var key = tab.getAttribute('data-tab');
+      tabs.forEach(function(t){ t.classList.remove('on'); t.setAttribute('aria-selected','false'); });
+      tab.classList.add('on'); tab.setAttribute('aria-selected','true');
+      panels.forEach(function(p){
+        p.classList.toggle('on', p.getAttribute('data-panel') === key);
+      });
+    });
+  });
+
+  /* ----- Reveal al hacer scroll (IntersectionObserver) ----- */
+  var reveals = document.querySelectorAll('.reveal:not(.in)');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+    reveals.forEach(function(el){ io.observe(el); });
+  } else {
+    reveals.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* ----- Scroll-spy: enlace activo del nav ----- */
+  var sections = ['inicio','esencia','pilares','carta','galeria','contacto']
+    .map(function(id){ return document.getElementById(id); })
+    .filter(Boolean);
+  var navLinks = nav.querySelectorAll('a[href^="#"]');
+  if('IntersectionObserver' in window){
+    var spy = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          var id = en.target.id;
+          navLinks.forEach(function(l){
+            l.classList.toggle('active', l.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    }, {threshold:0.3, rootMargin:'-30% 0px -55% 0px'});
+    sections.forEach(function(s){ spy.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>
