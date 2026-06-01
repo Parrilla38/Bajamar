@@ -86,11 +86,16 @@ a:focus-visible,button:focus-visible,.tab:focus-visible{
 .header.scrolled{background:rgba(246,241,233,.92);backdrop-filter:blur(10px);box-shadow:0 2px 18px rgba(10,42,82,.10);}
 .header__inner{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:1180px;margin:0 auto;padding:0 22px;}
 
-.brand{display:flex;align-items:center;gap:10px;color:#fff;transition:color .35s var(--ease);}
-.header.scrolled .brand{color:var(--marino);}
-.brand .mark{width:34px;height:34px;flex:none;}
-.brand .name{font-family:"Sora",sans-serif;font-weight:700;font-size:1.32rem;letter-spacing:.01em;}
-.brand .name b{color:var(--arena);font-weight:700;}
+.brand{display:flex;align-items:center;gap:10px;}
+.brand__logo{position:relative;display:block;height:52px;flex:none;}
+.brand__logo img{height:52px;width:auto;display:block;transition:opacity .35s var(--ease);filter:drop-shadow(0 2px 9px rgba(10,42,82,.4));}
+.brand__logo .cream{position:absolute;top:0;left:0;}
+/* Estado por defecto (cabecera transparente sobre el héroe): logo crema */
+.brand__logo .color{opacity:0;}
+.brand__logo .cream{opacity:1;}
+/* Cabecera con scroll (fondo claro): logo a todo color */
+.header.scrolled .brand__logo .color{opacity:1;}
+.header.scrolled .brand__logo .cream{opacity:0;}
 
 /* nav desktop */
 .nav{display:flex;align-items:center;gap:6px;}
@@ -277,9 +282,21 @@ a:focus-visible,button:focus-visible,.tab:focus-visible{
 .phone-link:hover svg{color:#fff;}
 
 .footer-bar{margin-top:60px;border-top:1px solid rgba(255,255,255,.12);padding:26px 0;}
+
+/* ----- Redes sociales ----- */
+.social{margin-top:54px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;}
+.social__label{font-family:"Sora",sans-serif;font-weight:600;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--arena);}
+.social__row{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;}
+.social__row a{
+  width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  color:#fff;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);
+  transition:background .25s var(--ease),border-color .25s var(--ease),transform .2s var(--ease),color .25s var(--ease);
+}
+.social__row a:hover{background:var(--cobalto);border-color:var(--cobalto);color:#fff;transform:translateY(-3px);box-shadow:0 10px 24px rgba(20,83,184,.4);}
+.social__row svg{width:23px;height:23px;}
+.social__row .tripadvisor{font-family:"Sora",sans-serif;font-weight:700;font-size:.62rem;letter-spacing:.04em;line-height:1;}
 .footer-bar__inner{display:flex;flex-wrap:wrap;gap:10px 24px;align-items:center;justify-content:space-between;color:rgba(255,255,255,.7);font-size:.86rem;}
-.footer-bar .brand .name{font-size:1.1rem;}
-.footer-bar .brand{color:#fff;}
+.brand--footer img{height:46px;width:auto;display:block;}
 
 /* =========================================================
    BOTÓN FLOTANTE TELÉFONO
@@ -355,13 +372,11 @@ a:focus-visible,button:focus-visible,.tab:focus-visible{
 <!-- ===================== HEADER ===================== -->
 <header class="header" id="header">
   <div class="header__inner">
-    <a href="#inicio" class="brand" aria-label="BajaMar, inicio">
-      <svg class="mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-        <!-- cola de ballena minimalista -->
-        <path d="M24 30c-1.6-5-1.8-11-1-17 .2-1.4 2.2-1.4 2.4 0 .8 6 .6 12-1 17-2.8 4.8-9 7.4-15.4 7.8-1.3.1-1.7-1.6-.6-2.2C13.8 33 20 31.6 24 30Z" fill="currentColor"/>
-        <path d="M24 30c1.6-5 1.8-11 1-17 0 0 0 0 0 0 .8 6 .6 12-1 17 2.8 4.8 9 7.4 15.4 7.8 1.3.1 1.7-1.6.6-2.2C34.2 33 28 31.6 24 30Z" fill="currentColor" opacity=".62"/>
-      </svg>
-      <span class="name">Baja<b>Mar</b></span>
+    <a href="#inicio" class="brand" aria-label="BajaMar · Taberna mar, inicio">
+      <span class="brand__logo">
+        <img class="color" src="Imagenes/logo1.png" alt="BajaMar · Taberna mar" />
+        <img class="cream" src="Imagenes/logo-cream.png" alt="" aria-hidden="true" />
+      </span>
     </a>
 
     <nav class="nav" id="nav" aria-label="Navegación principal">
@@ -480,9 +495,9 @@ a:focus-visible,button:focus-visible,.tab:focus-visible{
 
     <div class="tabs reveal d1" role="tablist" aria-label="Secciones de la carta">
       <button class="tab on" role="tab" aria-selected="true" data-tab="start" data-en="To Start">Para Abrir Boca</button>
-      <button class="tab" role="tab" aria-selected="false" data-tab="fritura" data-en="Fried Fish">Nuestra Fritura</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="fritura" data-en="Fried Fish">Pescaíto Frito</button>
       <button class="tab" role="tab" aria-selected="false" data-tab="mar" data-en="Seafood &amp; Grill">Joyas del Mar</button>
-      <button class="tab" role="tab" aria-selected="false" data-tab="carne" data-en="Meat Dishes">De la Serranía a la Mesa</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="carne" data-en="Meats &amp; Stews">Carnes y Guisos</button>
       <button class="tab" role="tab" aria-selected="false" data-tab="dulce" data-en="Desserts">El Momento Dulce</button>
     </div>
 
@@ -490,11 +505,14 @@ a:focus-visible,button:focus-visible,.tab:focus-visible{
     <div class="carta__panel on" data-panel="start" role="tabpanel">
       <div class="carta__media"><img class="crop-screenshot" src="Imagenes/WhatsApp%20Image%202026-05-31%20at%2018.35.45%20(5).jpeg" alt="Ensaladilla BajaMar con langostinos" loading="lazy" /></div>
       <div class="menu-list">
-        <div class="menu-item"><div class="menu-item__name">Ensaladilla BajaMar<span class="menu-item__en">BajaMar-style potato &amp; seafood salad</span></div><div class="menu-item__price">—</div></div>
-        <div class="menu-item"><div class="menu-item__name">Boquerones en vinagre<span class="menu-item__en">Fresh anchovies marinated in vinegar</span></div><div class="menu-item__price">—</div></div>
-        <div class="menu-item"><div class="menu-item__name">Porra Almageña<span class="menu-item__en">Thick chilled tomato &amp; bread purée</span></div><div class="menu-item__price">—</div></div>
-        <div class="menu-item"><div class="menu-item__name">Crema de Ajo Blanco con helado de mango<span class="menu-item__en">Chilled white garlic &amp; almond soup with mango ice cream</span></div><div class="menu-item__price">—</div></div>
-        <div class="menu-item"><div class="menu-item__name">Ensalada de pulpo y mango<span class="menu-item__en">Octopus &amp; mango salad</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Ensaladilla BajaMar<span class="menu-item__en">BajaMar-style potato &amp; seafood salad</span></div><div class="menu-item__price">2,50 / 9,90 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Ensalada de pulpo y mango<span class="menu-item__en">Octopus &amp; mango salad</span></div><div class="menu-item__price">12,00 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Mejillón sabrosón<span class="menu-item__en">Signature “Sabrosón” mussels</span></div><div class="menu-item__price">3,00 / 12,00 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Tartar de atún rojo de almadraba<span class="menu-item__en">Almadraba bluefin tuna tartare</span></div><div class="menu-item__price">21,00 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Tartar de salmón sobre crema de aguacate<span class="menu-item__en">Salmon tartare over avocado cream</span></div><div class="menu-item__price">18,00 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Porra Almargeña<span class="menu-item__en">Thick chilled tomato &amp; bread purée</span></div><div class="menu-item__price">3,00 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Gazpacho<span class="menu-item__en">Andalusian cold tomato soup (glass)</span></div><div class="menu-item__price">3,50 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Aceitunas gordales rellenas de morrón<span class="menu-item__en">Gordal olives in mojo picón, stuffed with peppers</span></div><div class="menu-item__price">1,50 €</div></div>
       </div>
     </div>
 
@@ -502,13 +520,19 @@ a:focus-visible,button:focus-visible,.tab:focus-visible{
     <div class="carta__panel" data-panel="fritura" role="tabpanel">
       <div class="carta__media"><img src="Imagenes/WhatsApp%20Image%202026-05-31%20at%2018.35.46.jpeg" alt="Tortillitas de camarones crujientes" loading="lazy" /></div>
       <div class="menu-list">
-        <div class="menu-item"><div class="menu-item__name">Tortillitas de camarones o de bacalao<span class="menu-item__en">Shrimp or salt-cod fritters</span></div><div class="menu-item__price">—</div></div>
-        <div class="menu-item"><div class="menu-item__name">Bienmesabe<span class="menu-item__en">Marinated &amp; fried dogfish</span></div><div class="menu-item__price">—</div></div>
-        <div class="menu-item"><div class="menu-item__name">Calamares<span class="menu-item__en">Fried squid rings</span></div><div class="menu-item__price">—</div></div>
-        <div class="menu-item"><div class="menu-item__name">Chocos<span class="menu-item__en">Fried cuttlefish</span></div><div class="menu-item__price">—</div></div>
-        <div class="menu-item"><div class="menu-item__name">Boquerones de Cádiz<span class="menu-item__en">Cádiz-style fried fresh anchovies</span></div><div class="menu-item__price">—</div></div>
-        <div class="menu-item"><div class="menu-item__name">Puntillitas<span class="menu-item__en">Fried baby squid</span></div><div class="menu-item__price">—</div></div>
-        <div class="menu-item"><div class="menu-item__name">Taquitos de bacalao<span class="menu-item__en">Crispy salt-cod bites</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Tortillita de camarones<span class="menu-item__en">Shrimp fritters</span></div><div class="menu-item__price">2,00 / 11,00 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Tortillita de bacalao<span class="menu-item__en">Salt-cod fritters</span></div><div class="menu-item__price">1,80 / 9,90 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Mejillón Tigre<span class="menu-item__en">Stuffed “Tigre” mussels</span></div><div class="menu-item__price">3,50 / 10,00 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Fideos tostados con jibia y langostinos<span class="menu-item__en">Toasted noodles with cuttlefish &amp; prawns, gratinated alioli</span></div><div class="menu-item__price">12,00 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Croquetas de la Casa<span class="menu-item__en">Homemade croquettes</span></div><div class="menu-item__price">10,00 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Bienmesabe (cazón en adobo)<span class="menu-item__en">Marinated &amp; fried dogfish</span></div><div class="menu-item__price">12,00 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Calamares<span class="menu-item__en">Fried squid rings</span></div><div class="menu-item__price">12,00 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Chocos<span class="menu-item__en">Fried cuttlefish</span></div><div class="menu-item__price">12,00 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Boquerones de Cádiz<span class="menu-item__en">Cádiz-style fried anchovies</span></div><div class="menu-item__price">12,00 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Puntillitas<span class="menu-item__en">Fried baby squid</span></div><div class="menu-item__price">12,00 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Pavía de merluza<span class="menu-item__en">Hake “Pavía style”</span></div><div class="menu-item__price">3,50 / 10,00 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Frito Gaditano<span class="menu-item__en">Cádiz-style mixed fried fish</span></div><div class="menu-item__price">19,95 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Pescadito del día<span class="menu-item__en">Catch of the day</span></div><div class="menu-item__price">s/m</div></div>
       </div>
     </div>
 
@@ -516,12 +540,13 @@ a:focus-visible,button:focus-visible,.tab:focus-visible{
     <div class="carta__panel" data-panel="mar" role="tabpanel">
       <div class="carta__media"><img src="Imagenes/WhatsApp%20Image%202026-05-31%20at%2018.35.47%20(2).jpeg" alt="Gambas al pil-pil en su cazuela" loading="lazy" /></div>
       <div class="menu-list">
-        <div class="menu-item"><div class="menu-item__name">Colas de langostinos<span class="menu-item__en">King prawn tails</span></div><div class="menu-item__price">—</div></div>
-        <div class="menu-item"><div class="menu-item__name">Gambas blancas<span class="menu-item__en">White prawns</span></div><div class="menu-item__price">—</div></div>
-        <div class="menu-item"><div class="menu-item__name">Gambas al pil-pil<span class="menu-item__en">Sizzling prawns in garlic &amp; chilli</span></div><div class="menu-item__price">—</div></div>
-        <div class="menu-item"><div class="menu-item__name">Mejillones marinera<span class="menu-item__en">Mussels in marinara sauce</span></div><div class="menu-item__price">—</div></div>
-        <div class="menu-item"><div class="menu-item__name">Pata de pulpo<span class="menu-item__en">Grilled octopus leg</span></div><div class="menu-item__price">—</div></div>
-        <div class="menu-item"><div class="menu-item__name">Dorada o Lubina a la Rondeña<span class="menu-item__en">Ronda-style sea bream or sea bass</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Chanquetes con huevo y pimientos<span class="menu-item__en">Whitebait with egg &amp; peppers</span></div><div class="menu-item__price">14,50 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Gambas al pil-pil<span class="menu-item__en">Sizzling prawns in garlic &amp; chilli</span></div><div class="menu-item__price">21,00 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Colas de langostinos<span class="menu-item__en">King prawn tails</span></div><div class="menu-item__price">18,00 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Mejillones marinera<span class="menu-item__en">Mussels in marinara sauce</span></div><div class="menu-item__price">18,00 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Dorada a la Rondeña<span class="menu-item__en">Ronda-style sea bream (or fried / grilled)</span></div><div class="menu-item__price">20,90 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Lubina a la Rondeña<span class="menu-item__en">Ronda-style sea bass (or fried / grilled)</span></div><div class="menu-item__price">20,90 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Pata de pulpo<span class="menu-item__en">Grilled octopus leg</span></div><div class="menu-item__price">20,90 €</div></div>
       </div>
     </div>
 
@@ -529,11 +554,12 @@ a:focus-visible,button:focus-visible,.tab:focus-visible{
     <div class="carta__panel" data-panel="carne" role="tabpanel">
       <div class="carta__media"><img src="Imagenes/WhatsApp%20Image%202026-05-31%20at%2018.35.46%20(1).jpeg" alt="Rabo de toro guisado" loading="lazy" /></div>
       <div class="menu-list">
-        <div class="menu-item"><div class="menu-item__name">Cachopo asturiano<span class="menu-item__en">Asturian breaded veal filled with ham &amp; cheese</span></div><div class="menu-item__price">—</div></div>
-        <div class="menu-item"><div class="menu-item__name">Flamenquín Cordobés<span class="menu-item__en">Córdoba-style breaded pork &amp; ham roll</span></div><div class="menu-item__price">—</div></div>
-        <div class="menu-item"><div class="menu-item__name">Carnes de cerdo ibérico<span class="menu-item__en">Iberian pork cuts</span></div><div class="menu-item__price">—</div></div>
-        <div class="menu-item"><div class="menu-item__name">Rabo de toro<span class="menu-item__en">Slow-braised oxtail stew</span></div><div class="menu-item__price">—</div></div>
-        <div class="menu-item"><div class="menu-item__name">Carrillada de cerdo ibérico<span class="menu-item__en">Braised Iberian pork cheeks</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Paella de mariscos <em style="font-style:normal;color:var(--gris-en);font-weight:500">(mín. 2 pers.)</em><span class="menu-item__en">Seafood paella (min. two people)</span></div><div class="menu-item__price">35,00 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Cachopo auténtico de Asturias<span class="menu-item__en">Authentic Asturian cachopo</span></div><div class="menu-item__price">21,00 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Rabo de toro<span class="menu-item__en">Slow-braised oxtail stew</span></div><div class="menu-item__price">21,00 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Carrillada de cerdo ibérico<span class="menu-item__en">Braised Iberian pork cheeks</span></div><div class="menu-item__price">21,00 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Carnes de cerdo ibérico<span class="menu-item__en">Iberian pork selection</span></div><div class="menu-item__price">20,90 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Codorniz estofada al vino blanco<span class="menu-item__en">Quail stewed in white wine</span></div><div class="menu-item__price">9,90 €</div></div>
       </div>
     </div>
 
@@ -541,9 +567,11 @@ a:focus-visible,button:focus-visible,.tab:focus-visible{
     <div class="carta__panel" data-panel="dulce" role="tabpanel">
       <div class="carta__media"><img src="Imagenes/WhatsApp%20Image%202026-05-31%20at%2018.35.45%20(4).jpeg" alt="Ambiente de sobremesa en BajaMar" loading="lazy" /></div>
       <div class="menu-list">
-        <div class="menu-item"><div class="menu-item__name">Tarta de queso casera asada<span class="menu-item__en">Homemade baked cheesecake</span></div><div class="menu-item__price">—</div></div>
-        <div class="menu-item"><div class="menu-item__name">Sorbetes<span class="menu-item__en">Seasonal sorbets</span></div><div class="menu-item__price">—</div></div>
-        <div class="menu-item"><div class="menu-item__name">Postres de la casa<span class="menu-item__en">House desserts</span></div><div class="menu-item__price">—</div></div>
+        <div class="menu-item"><div class="menu-item__name">Tarta de queso casera asada<span class="menu-item__en">Homemade baked cheesecake</span></div><div class="menu-item__price">7,00 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Bienmesabe Rondeño<span class="menu-item__en">Ronda-style almond dessert</span></div><div class="menu-item__price">6,50 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Popurrí de postres <em style="font-style:normal;color:var(--gris-en);font-weight:500">(para dos)</em><span class="menu-item__en">Dessert medley (for two)</span></div><div class="menu-item__price">15,00 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Sorbetes<span class="menu-item__en">Natural fruit sorbet</span></div><div class="menu-item__price">5,50 €</div></div>
+        <div class="menu-item"><div class="menu-item__name">Postre de la casa<span class="menu-item__en">House dessert</span></div><div class="menu-item__price">6,50 €</div></div>
       </div>
     </div>
 
@@ -571,6 +599,9 @@ a:focus-visible,button:focus-visible,.tab:focus-visible{
       <figure class="gal-item reveal d1"><img src="Imagenes/WhatsApp%20Image%202026-05-31%20at%2018.35.46%20(3).jpeg" alt="Boquerones de Cádiz fritos" loading="lazy" /><figcaption data-en="Cádiz anchovies">Boquerones de Cádiz</figcaption></figure>
       <figure class="gal-item reveal d2"><img src="Imagenes/WhatsApp%20Image%202026-05-31%20at%2018.35.46%20(2).jpeg" alt="Chocos y calamares fritos" loading="lazy" /><figcaption data-en="Cuttlefish &amp; squid">Chocos &amp; calamares</figcaption></figure>
       <figure class="gal-item reveal d2"><img src="Imagenes/WhatsApp%20Image%202026-05-31%20at%2018.35.45%20(1).jpeg" alt="Bienmesabe, cazón en adobo" loading="lazy" /><figcaption data-en="Bienmesabe">Bienmesabe</figcaption></figure>
+      <figure class="gal-item reveal d3"><img src="Imagenes/WhatsApp%20Image%202026-05-31%20at%2018.35.45.jpeg" alt="Arroz meloso en su paella" loading="lazy" /><figcaption data-en="Soupy rice">Arroz meloso</figcaption></figure>
+      <figure class="gal-item reveal d3"><img src="Imagenes/WhatsApp%20Image%202026-05-31%20at%2018.35.45%20(4).jpeg" alt="Pescaíto frito con pimientos" loading="lazy" /><figcaption data-en="Fried fish">Pescaíto frito</figcaption></figure>
+      <figure class="gal-item reveal d3"><img src="Imagenes/tarta-queso.jpeg" alt="Tarta de queso casera asada con mango" loading="lazy" /><figcaption data-en="Baked cheesecake">Tarta de queso</figcaption></figure>
     </div>
   </div>
 </section>
@@ -612,14 +643,28 @@ a:focus-visible,button:focus-visible,.tab:focus-visible{
       </div>
     </div>
 
+    <div class="social reveal">
+      <span class="social__label" data-en="Follow us">Síguenos</span>
+      <div class="social__row">
+        <a href="#" aria-label="Facebook de BajaMar" title="Facebook">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7h2.3l.4-2.7h-2.7V9.5c0-.8.2-1.3 1.3-1.3h1.5V5.8c-.3 0-1.2-.1-2.2-.1-2.1 0-3.5 1.3-3.5 3.6v2H8.3V14h2.3v7h2.9Z"/></svg>
+        </a>
+        <a href="#" aria-label="TikTok de BajaMar" title="TikTok">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.5 2c.3 2 1.6 3.6 3.5 3.9v2.6c-1.3.1-2.6-.3-3.6-1v5.9c0 3.2-2.4 5.6-5.5 5.6S5.4 16.6 5.4 13.4c0-2.9 2-5.2 4.8-5.5v2.7c-1.3.2-2.2 1.3-2.2 2.7 0 1.6 1.1 2.8 2.6 2.8s2.6-1.2 2.6-3V2h3.3Z"/></svg>
+        </a>
+        <a href="#" aria-label="Tripadvisor de BajaMar" title="Tripadvisor">
+          <span class="tripadvisor">TRIP</span>
+        </a>
+        <a href="#" aria-label="X (Twitter) de BajaMar" title="X">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 3h3l-6.6 7.5L21.7 21h-5.9l-4.6-6-5.3 6H2.9l7-8L2.6 3h6l4.2 5.5L17.5 3Zm-1 16h1.7L7.6 4.7H5.8L16.5 19Z"/></svg>
+        </a>
+      </div>
+    </div>
+
     <div class="footer-bar">
       <div class="footer-bar__inner">
-        <a href="#inicio" class="brand" aria-label="BajaMar, inicio">
-          <svg class="mark" viewBox="0 0 48 48" fill="none" aria-hidden="true" style="width:26px;height:26px;color:#fff">
-            <path d="M24 30c-1.6-5-1.8-11-1-17 .2-1.4 2.2-1.4 2.4 0 .8 6 .6 12-1 17-2.8 4.8-9 7.4-15.4 7.8-1.3.1-1.7-1.6-.6-2.2C13.8 33 20 31.6 24 30Z" fill="currentColor"/>
-            <path d="M24 30c1.6-5 1.8-11 1-17 .8 6 .6 12-1 17 2.8 4.8 9 7.4 15.4 7.8 1.3.1 1.7-1.6.6-2.2C34.2 33 28 31.6 24 30Z" fill="currentColor" opacity=".62"/>
-          </svg>
-          <span class="name">Baja<b style="color:var(--arena)">Mar</b></span>
+        <a href="#inicio" class="brand brand--footer" aria-label="BajaMar · Taberna mar, inicio">
+          <img src="Imagenes/logo-cream.png" alt="BajaMar · Taberna mar" />
         </a>
         <span>C. Comandante Salvador Carrasco, 10 · 29400 Ronda, Málaga</span>
         <span>© <span id="year"></span> BajaMar · <span data-en="Seaside tavern">Taberna marinera</span></span>

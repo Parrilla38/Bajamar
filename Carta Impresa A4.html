@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BajaMar · Carta para imprimir (A4)</title>
+<meta name="description" content="Carta de BajaMar maquetada en A4 para impresión en papel." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+/* =========================================================
+   BAJAMAR · CARTA PARA IMPRIMIR (A4 vertical, 2 hojas)
+   ========================================================= */
+:root{
+  --cobalto:#1453B8;
+  --marino:#0A2A52;
+  --blanco:#FFFFFF;
+  --hueso:#F6F1E9;
+  --arena:#D7B27D;
+  --tinta:#1C2733;
+  --gris-en:#6B7785;
+
+  --pcol:54px;          /* columna de precio */
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  font-family:"Inter",system-ui,-apple-system,sans-serif;
+  color:var(--tinta);
+  background:#5b6470;            /* mesa gris bajo las hojas (solo pantalla) */
+  line-height:1.42;
+  -webkit-font-smoothing:antialiased;
+  padding:30px 16px 64px;
+}
+::selection{background:var(--cobalto);color:#fff;}
+
+/* =========================================================
+   BARRA DE HERRAMIENTAS (no se imprime)
+   ========================================================= */
+.toolbar{
+  position:fixed;top:16px;right:16px;z-index:50;
+  display:flex;align-items:center;gap:10px;
+}
+.toolbar .hint{
+  font-size:.74rem;color:rgba(255,255,255,.82);
+  background:rgba(10,42,82,.55);backdrop-filter:blur(4px);
+  padding:7px 12px;border-radius:99px;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+  font-family:"Sora",sans-serif;font-weight:600;font-size:.84rem;
+  color:#fff;background:var(--cobalto);border:none;
+  padding:10px 18px;border-radius:99px;
+  box-shadow:0 6px 18px rgba(10,42,82,.35);
+  transition:transform .15s var(--ease),background .2s var(--ease);
+}
+.btn:hover{background:#0e44a0;transform:translateY(-1px);}
+.btn svg{width:16px;height:16px;}
+
+/* =========================================================
+   HOJA A4
+   ========================================================= */
+.sheet{
+  width:210mm;min-height:297mm;
+  background:var(--hueso);
+  margin:0 auto 26px;
+  padding:0;
+  position:relative;
+  box-shadow:0 10px 40px rgba(0,0,0,.35);
+  overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.sheet__pad{padding:16mm 15mm 14mm;flex:1;display:flex;flex-direction:column;}
+
+/* Marco fino de arena dentro de la hoja */
+.sheet::after{
+  content:"";position:absolute;inset:7mm;
+  border:1px solid rgba(215,178,125,.55);
+  pointer-events:none;
+}
+
+/* =========================================================
+   CABECERA (solo hoja 1)
+   ========================================================= */
+.head{
+  text-align:center;
+  padding-bottom:9mm;margin-bottom:7mm;
+  border-bottom:2px solid var(--arena);
+  position:relative;
+}
+.head .logo{display:block;height:88px;width:auto;margin:0 auto 4px;}
+.head .tagline{
+  font-family:"Sora",sans-serif;font-weight:600;
+  text-transform:uppercase;letter-spacing:.34em;
+  font-size:10px;color:var(--arena);margin-top:9px;padding-left:.34em;
+}
+.head .place{
+  font-size:11px;color:var(--gris-en);margin-top:7px;letter-spacing:.02em;
+}
+
+/* Cabecera mínima de continuación (hoja 2+) */
+.minihead{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-bottom:5mm;margin-bottom:6mm;
+  border-bottom:1px solid rgba(215,178,125,.7);
+}
+.minihead .nm{display:flex;align-items:center;gap:9px;font-family:"Sora",sans-serif;font-weight:700;color:var(--marino);font-size:14px;letter-spacing:.06em;text-transform:uppercase;}
+.minihead .nm img{height:30px;width:auto;display:block;}
+.minihead .pg{font-size:9px;text-transform:uppercase;letter-spacing:.18em;color:var(--gris-en);}
+
+/* =========================================================
+   COLUMNAS DE CONTENIDO
+   ========================================================= */
+.cols{
+  column-count:2;column-gap:12mm;
+  flex:1;
+}
+.section{
+  break-inside:avoid;-webkit-column-break-inside:avoid;page-break-inside:avoid;
+  margin-bottom:7mm;
+}
+.section__head{margin-bottom:3.5mm;}
+.section__title{
+  font-family:"Sora",sans-serif;font-weight:700;
+  color:var(--cobalto);
+  font-size:14.5px;letter-spacing:.03em;text-transform:uppercase;line-height:1.12;
+}
+.section__en{
+  display:block;font-weight:400;color:var(--gris-en);
+  font-size:9.5px;margin-top:2px;letter-spacing:.01em;
+}
+.section__rule{display:flex;align-items:center;gap:7px;margin-top:5px;color:var(--arena);}
+.section__rule .ln{height:1.5px;flex:1;background:var(--arena);border-radius:2px;opacity:.8;}
+.section__rule svg{flex:none;display:block;}
+
+.colhead{
+  display:grid;grid-template-columns:1fr var(--pcol) var(--pcol);
+  gap:9px;align-items:end;margin-bottom:3px;padding-bottom:4px;
+  border-bottom:1px dotted rgba(28,39,51,.3);
+}
+.colhead span{
+  font-family:"Sora",sans-serif;font-weight:600;
+  font-size:8px;text-transform:uppercase;letter-spacing:.1em;
+  color:var(--gris-en);text-align:right;
+}
+
+.item{
+  display:grid;grid-template-columns:1fr var(--pcol) var(--pcol);
+  gap:9px;align-items:baseline;padding:4px 0;
+}
+.item + .item{border-top:1px solid rgba(10,42,82,.08);}
+.item__name{font-weight:600;color:var(--tinta);font-size:11px;line-height:1.25;text-wrap:pretty;}
+.item__en{display:block;font-weight:400;color:var(--gris-en);font-size:8.7px;line-height:1.3;margin-top:.5px;}
+.item__price{
+  text-align:right;font-variant-numeric:tabular-nums;
+  font-weight:600;color:var(--marino);font-size:10px;white-space:nowrap;
+}
+.item__price.empty{color:transparent;}
+.item__price.lead{color:#b78a44;}
+
+/* =========================================================
+   PIE · alérgenos (al final de la última hoja)
+   ========================================================= */
+.foot{
+  margin-top:auto;padding-top:6mm;
+  border-top:2px solid var(--arena);
+  text-align:center;
+}
+.allergens{display:flex;flex-wrap:wrap;justify-content:center;gap:5mm 6mm;margin-bottom:5mm;}
+.alg{display:flex;flex-direction:column;align-items:center;gap:4px;width:54px;}
+.alg svg{width:20px;height:20px;color:var(--cobalto);}
+.alg span{font-size:7.5px;letter-spacing:.03em;color:var(--gris-en);text-align:center;line-height:1.15;}
+.notice{color:var(--gris-en);font-size:8.5px;line-height:1.5;max-width:78ch;margin:0 auto;}
+.notice .en{display:block;color:#9aa4b0;margin-top:2px;}
+.foot__brand{
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  margin-top:5mm;font-family:"Sora",sans-serif;font-weight:600;
+  letter-spacing:.04em;color:var(--marino);font-size:11px;
+}
+.foot__brand svg{width:18px;height:18px;color:var(--arena);}
+
+/* =========================================================
+   SUGERENCIAS FUERA DE CARTA
+   ========================================================= */
+.suggest{
+  break-inside:avoid;-webkit-column-break-inside:avoid;page-break-inside:avoid;
+  margin:2mm 0 6mm;padding:5mm 6mm;
+  background:rgba(20,83,184,.06);
+  border:1px solid rgba(20,83,184,.22);
+  border-left:3px solid var(--arena);
+  border-radius:3px;
+  display:flex;align-items:center;gap:6mm;
+}
+.suggest svg{width:26px;height:26px;color:var(--cobalto);flex:none;}
+.suggest__tx{flex:1;}
+.suggest__tx h3{
+  font-family:"Sora",sans-serif;font-weight:700;color:var(--marino);
+  font-size:13px;letter-spacing:.02em;line-height:1.15;
+}
+.suggest__tx p{font-size:10px;color:var(--tinta);line-height:1.45;margin-top:2px;}
+.suggest__tx .en{display:block;color:var(--gris-en);font-size:8.7px;margin-top:1px;}
+
+/* =========================================================
+   IMPRESIÓN
+   ========================================================= */
+@page{ size:A4; margin:0; }
+@media print{
+  body{background:#fff;padding:0;}
+  .toolbar{display:none !important;}
+  .sheet{
+    margin:0;box-shadow:none;width:210mm;min-height:297mm;
+    page-break-after:always;break-after:page;
+  }
+  .sheet:last-child{page-break-after:auto;break-after:auto;}
+  /* asegurar que los colores de marca se impriman */
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}
+
+/* Pantallas estrechas: escalar la hoja para que quepa */
+@media screen and (max-width:840px){
+  body{padding:16px 0 40px;}
+  .sheet{transform:scale(.92);transform-origin:top center;margin-bottom:-10mm;}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ BARRA (no se imprime) ============ -->
+<div class="toolbar">
+  <span class="hint">A4 · 2 hojas · imprime a doble cara</span>
+  <button class="btn" id="printBtn" type="button">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+    Imprimir / Guardar PDF
+  </button>
+</div>
+
+<!-- ============ HOJAS (generadas por JS) ============ -->
+<div id="doc"></div>
+
+<script>
+const MENU = [
+  { id:"entrantes", es:"Entrantes y Fríos", en:"Starters & Cold Dishes", cols:["Tapa","Plato"], items:[
+    ["Ensaladilla BajaMar","BajaMar-Style Potato & Seafood Salad","2,50 €","9,90 €"],
+    ["Ensalada de pimientos del piquillo asados","Roasted Piquillo Pepper Salad","","9,90 €"],
+    ["Ensalada de lechuga, cebolla, tomate y atún","Lettuce, Onion, Tomato & Tuna Salad","","12,00 €"],
+    ["Ensalada de pulpo y mango","Octopus & Mango Salad","","12,00 €"],
+    ["Porra Almargeña","Traditional Porra Almargeña","","3,00 €"],
+    ["Mejillón sabrosón","Signature Mussels “Sabrosón”","3,00 €","12,00 €"],
+    ["Tartar de salmón fresco sobre crema de aguacate","Fresh Salmon Tartare over Avocado Cream","","18,00 €"],
+    ["Tartar de atún rojo de almadraba","Almadraba Bluefin Tuna Tartare","","21,00 €"],
+    ["Gazpacho (vaso)","Andalusian Cold Tomato Soup (glass)","","3,50 €"],
+    ["Aceitunas gordales al mojo picón rellenas de morrones","Gordal Olives in Mojo Picón, Stuffed with Peppers","","1,50 €"]
+  ]},
+  { id:"fritura", es:"Nuestras Frituras", en:"Fried Fish & Tapas", cols:["Tapa","Plato"], items:[
+    ["Mejillón Tigre","Stuffed “Tigre” Mussels","3,50 €","10,00 €"],
+    ["Tortillita de bacalao","Salt-Cod Fritters","1,80 €","9,90 €"],
+    ["Tortillita de camarones","Shrimp Fritters","2,00 €","11,00 €"],
+    ["Fideos tostados con jibia y langostinos, alioli gratinado en su coral","Toasted Noodles with Cuttlefish & Prawns, Gratinated Alioli","","12,00 €"],
+    ["Croquetas de la Casa","Homemade Croquettes","","10,00 €"],
+    ["Bienmesabe (cazón en adobo)","Marinated Fried Dogfish (Bienmesabe)","","12,00 €"],
+    ["Calamares","Fried Squid Rings","","12,00 €"],
+    ["Chocos","Fried Cuttlefish","","12,00 €"],
+    ["Boquerones de Cádiz","Cádiz-Style Fried Anchovies","","12,00 €"],
+    ["Puntillitas","Fried Baby Squid","","12,00 €"],
+    ["Taquitos de bacalao","Crispy Salt-Cod Bites","","12,00 €"],
+    ["Pavía de merluza","Hake “Pavía Style”","3,50 €","10,00 €"],
+    ["Frito Gaditano","Cádiz-Style Mixed Fried Fish","","19,95 €"],
+    ["Pescadito del día","Catch of the Day","","s/m"],
+    ["Patatas fritas caseras","Homemade Fried Potatoes","","3,00 €"],
+    ["Patatas bravas BajaMar","BajaMar Spicy Potatoes","","10,00 €"]
+  ]},
+  { id:"mar", es:"Joyas del Mar", en:"Seafood & Grill", cols:["Tapa","Plato"], items:[
+    ["Chanquetes con huevo y pimientos","Whitebait with Egg & Peppers","","14,50 €"],
+    ["Mejillones marinera","Mussels in Marinera Sauce","","18,00 €"],
+    ["Colas de langostinos","King Prawn Tails","","18,00 €"],
+    ["Gambas al pil-pil","Garlic Prawns “Pil-Pil Style”","","21,00 €"],
+    ["Dorada (frita, plancha, a la espalda o a la Rondeña)","Sea Bream (fried, grilled, butterflied or Rondeña style)","","20,90 €"],
+    ["Lubina (frita, plancha, a la espalda o a la Rondeña)","Sea Bass (fried, grilled, butterflied or Rondeña style)","","20,90 €"],
+    ["Pata de pulpo","Grilled Octopus Leg","","20,90 €"]
+  ]},
+  { id:"carnes", es:"Carnes y Guisos", en:"Meats & Stews", cols:["Tapa","Plato"], items:[
+    ["Paella de mariscos (mínimo dos personas)","Seafood Paella (min. two people)","","35,00 €"],
+    ["Codorniz estofada al vino blanco","Quail Stewed in White Wine","","9,90 €"],
+    ["Carnes de cerdo ibérico","Iberian Pork Selection","","20,90 €"],
+    ["Rabo de toro","Traditional Oxtail Stew","","21,00 €"],
+    ["Carrillada de cerdo ibérico","Braised Iberian Pork Cheeks","","21,00 €"],
+    ["Cachopo auténtico de Asturias","Authentic Asturian Cachopo","","21,00 €"]
+  ]},
+  { id:"postres", es:"Postres", en:"Desserts", cols:["Tapa","Plato"], items:[
+    ["Tarta de queso casera asada","Homemade Baked Cheesecake","","7,00 €"],
+    ["Bienmesabe Rondeño","Ronda-Style Almond Dessert","","6,50 €"],
+    ["Sorbetes","Natural Fruit Sorbet","","5,50 €"],
+    ["Postre de la casa","House Dessert","","6,50 €"],
+    ["Popurrí de postres (para dos personas)","Dessert Medley (for two)","","15,00 €"]
+  ]},
+  { id:"sides", es:"Para Acompañar", en:"Sides", cols:["Tapa","Plato"], items:[
+    ["Servicio de pan, picos y aceitunas (por persona)","Bread, Breadsticks & Olives (per person)","","1,80 €"]
+  ]}
+];
+
+/* Reparto de secciones por hoja A4 */
+const SHEETS = [
+  ["entrantes","fritura"],                    // Hoja 1 (con cabecera)
+  ["mar","carnes","postres","sides"]          // Hoja 2 (con sugerencias + pie)
+];
+
+const WAVE = '<svg width="30" height="12" viewBox="0 0 34 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M2 9c3.5 0 4-6 7.5-6S15 9 18.5 9 24 3 27.5 3 32 9 32 9"/></svg>';
+const WHALE = '<svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M24 30c-1.6-5-1.8-11-1-17 .2-1.4 2.2-1.4 2.4 0 .8 6 .6 12-1 17-2.8 4.8-9 7.4-15.4 7.8-1.3.1-1.7-1.6-.6-2.2C13.8 33 20 31.6 24 30Z" fill="currentColor"/><path d="M24 30c1.6-5 1.8-11 1-17 .8 6 .6 12-1 17 2.8 4.8 9 7.4 15.4 7.8 1.3.1 1.7-1.6.6-2.2C34.2 33 28 31.6 24 30Z" fill="currentColor" opacity=".62"/></svg>';
+
+const byId = {};
+MENU.forEach(function(s){ byId[s.id]=s; });
+
+function priceCell(v,isPlato){
+  if(!v) return '<div class="item__price empty">—</div>';
+  return '<div class="item__price'+(isPlato?' lead':'')+'">'+v+'</div>';
+}
+function renderSection(s){
+  return '<section class="section">'+
+    '<div class="section__head">'+
+      '<h2 class="section__title">'+s.es+'<span class="section__en">'+s.en+'</span></h2>'+
+      '<div class="section__rule"><span class="ln"></span>'+WAVE+'<span class="ln"></span></div>'+
+    '</div>'+
+    '<div class="colhead"><span></span><span>'+s.cols[0]+'</span><span>'+s.cols[1]+'</span></div>'+
+    s.items.map(function(it){
+      return '<div class="item"><div class="item__name">'+it[0]+'<span class="item__en">'+it[1]+'</span></div>'+priceCell(it[2],false)+priceCell(it[3],true)+'</div>';
+    }).join('')+
+  '</section>';
+}
+
+const ALLERGENS = [
+  ['Gluten','<path d="M12 21V8"/><path d="M12 8c0-2.5 1.5-4 4-4 0 2.5-1.5 4-4 4Z"/><path d="M12 8c0-2.5-1.5-4-4-4 0 2.5 1.5 4 4 4Z"/><path d="M12 13c0-2 1.4-3.4 3.6-3.4 0 2-1.4 3.4-3.6 3.4Z"/><path d="M12 13c0-2-1.4-3.4-3.6-3.4 0 2 1.4 3.4 3.6 3.4Z"/>'],
+  ['Crustáceos','<path d="M16 7c-3 0-6 2.4-6 6 0 2.5 1.8 4.6 4.5 4.9"/><path d="M16 7c1.6 0 3 1.2 3 2.6S17.6 12 16 12"/><path d="M10 13c-2.5 0-5 1.4-6 3.6"/><path d="M10 15c-2.2.6-4 2.2-4.6 4.2"/><circle cx="18" cy="6" r="1"/>'],
+  ['Pescado','<path d="M3 12c3-4 8-5 11-5s5 2 5 5-2 5-5 5-8-1-11-5Z"/><path d="M19 9l2-2v10l-2-2"/><circle cx="9" cy="11" r=".9" fill="currentColor"/>'],
+  ['Moluscos','<path d="M12 20c5 0 9-4 9-9 0-3.5-3-6-6-6-1.6 0-2.8.8-3 2-.2-1.2-1.4-2-3-2"/><path d="M12 20c-2.4 0-3.6-3-4-6"/><path d="M12 7v13"/><path d="M16 8l-4 5-4-5"/>'],
+  ['Huevo','<path d="M12 21c-3.3 0-6-2.5-6-6.2C6 9.6 9 3 12 3s6 6.6 6 11.8C18 18.5 15.3 21 12 21Z"/>'],
+  ['Lácteos','<path d="M8 3h8"/><path d="M9 3v3l-2 3v10a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9l-2-3V3"/><path d="M7 12h10"/>'],
+  ['Sulfitos','<circle cx="12" cy="12" r="9"/><path d="M14.5 9.2c-.4-.8-1.3-1.3-2.4-1.3-1.4 0-2.4.8-2.4 1.9 0 2.5 5 1.3 5 3.9 0 1.2-1.1 2-2.6 2-1.2 0-2.2-.5-2.6-1.4"/>']
+];
+function renderFoot(){
+  const algs = ALLERGENS.map(function(a){
+    return '<div class="alg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+a[1]+'</svg><span>'+a[0]+'</span></div>';
+  }).join('');
+  return '<div class="foot">'+
+    '<div class="allergens" aria-hidden="true">'+algs+'</div>'+
+    '<p class="notice">Los alimentos pueden contener trazas de alérgenos · No dude en consultarnos · Libre de anisakis · Precios con IVA'+
+      '<span class="en">Dishes may contain traces of allergens · Please ask our staff · Anisakis-free · Prices include VAT</span></p>'+
+    '<div class="foot__brand">'+WHALE+'BajaMar · Ronda</div>'+
+  '</div>';
+}
+
+function renderSuggest(){
+  return '<div class="suggest">'+
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.6.6 1 1.4 1 2.2V16h6v-.3c0-.8.4-1.6 1-2.2A6 6 0 0 0 12 3Z"/></svg>'+
+    '<div class="suggest__tx">'+
+      '<h3>Sugerencias fuera de carta</h3>'+
+      '<p>Cada día trabajamos con producto fresco de mercado. Pregunta a nuestro equipo por las sugerencias del día y los pescados de temporada.'+
+        '<span class="en">We work with fresh market produce daily — ask our team about today’s off-menu specials and seasonal fish.</span></p>'+
+    '</div>'+
+  '</div>';
+}
+
+function renderSheet(ids, index){
+  const isFirst = index===0;
+  const isLast  = index===SHEETS.length-1;
+  const header = isFirst
+    ? '<header class="head">'+
+        '<img class="logo" src="assets/logo1.png" alt="BajaMar · Taberna Marinera" />'+
+        '<p class="tagline">Carta · Menu</p>'+
+        '<p class="place">Centro histórico de Ronda · Málaga</p>'+
+      '</header>'
+    : '<div class="minihead"><span class="nm"><img src="assets/logo1.png" alt="BajaMar" />Carta</span><span class="pg">Taberna Marinera · Ronda</span></div>';
+
+  const cols = '<div class="cols">'+ ids.map(function(id){ return renderSection(byId[id]); }).join('') +'</div>';
+  const suggest = isLast ? renderSuggest() : '';
+  const foot = isLast ? renderFoot() : '';
+  return '<div class="sheet"><div class="sheet__pad">'+header+cols+suggest+foot+'</div></div>';
+}
+
+document.getElementById('doc').innerHTML = SHEETS.map(renderSheet).join('');
+document.getElementById('printBtn').addEventListener('click', function(){ window.print(); });
+</script>
+
+</body>
+</html>
